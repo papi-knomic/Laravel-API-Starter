@@ -13,7 +13,7 @@ class RegisterUserRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,19 @@ class RegisterUserRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'first_name' => 'required|string',
+            'last_name' => 'required|string',
+            'username' => 'required|string|unique:users',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|string|min:8|confirmed',
+            'location' => 'nullable|string',
+            'skills' => 'nullable|string',
+            'profile_picture' => 'nullable|url',
+            'github_url' => 'nullable|url',
+            'bio' => 'nullable|string',
+            'portfolio' => 'nullable|string',
+            'interests' => 'nullable|string',
+            'current_position' => 'nullable|string'
         ];
     }
 }
