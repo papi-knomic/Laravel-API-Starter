@@ -4,6 +4,7 @@ namespace App\Observers;
 
 use App\Models\User;
 use App\Notifications\EmailVerificationNotification;
+use App\Notifications\WelcomeMailNotification;
 use Illuminate\Support\Facades\Notification;
 
 class UserObserver
@@ -11,29 +12,51 @@ class UserObserver
     /**
      * Handle the User "created" event.
      *
-     * @param  \App\Models\User  $user
+     * @param User $user
      * @return void
+     * @throws \Exception
      */
     public function created(User $user)
     {
-        //
+        $this->generateUserVerificationCode($user->email);
+    }
+
+    /**
+     * Handle the Product "creating" event.
+     *
+     * @param User $user
+     * @return void
+     */
+    public function creating(User $user)
+    {
     }
 
     /**
      * Handle the User "updated" event.
      *
-     * @param  \App\Models\User  $user
+     * @param User $user
      * @return void
      */
     public function updated(User $user)
     {
-        //
+        $emailWasVerified = $user->wasChanged('email_verified_at');
+
+        if ($emailWasVerified) {
+            $firstname = $user->firstname;
+
+            $data = [
+                'subject' => "Welcome to FOSI {$firstname}",
+                'firstname' => $firstname
+            ];
+
+            Notification::route('mail', $user->email)->notify((new WelcomeMailNotification($data)));
+        }
     }
 
     /**
      * Handle the User "deleted" event.
      *
-     * @param  \App\Models\User  $user
+     * @param User $user
      * @return void
      */
     public function deleted(User $user)
@@ -44,7 +67,7 @@ class UserObserver
     /**
      * Handle the User "restored" event.
      *
-     * @param  \App\Models\User  $user
+     * @param User $user
      * @return void
      */
     public function restored(User $user)
@@ -55,7 +78,7 @@ class UserObserver
     /**
      * Handle the User "force deleted" event.
      *
-     * @param  \App\Models\User  $user
+     * @param User $user
      * @return void
      */
     public function forceDeleted(User $user)
@@ -66,19 +89,19 @@ class UserObserver
     /**
      * @throws \Exception
      */
-//    private function generateUserVerificationCode(string $email ) {
-//        $code = generateVerificationCodeForUser($email);
-//        $firstname = getUserFirstNameFromEmail($email);
-//
-//        $details = [
-//            'subject' => 'Verify Email Address',
-//            'message' => 'Your verification code: :code',
-//            'code' => $code,
-//            'firstname' => $firstname
-//        ];
-//
-//        Notification::route('mail', $email)
-//            ->notify(new EmailVerificationNotification($details));
-//
-//    }
+    private function generateUserVerificationCode(string $email ) {
+        $code = generateVerificationCodeForUser($email);
+        $firstname = getUserFirstNameFromEmail($email);
+
+        $details = [
+            'subject' => 'Verify Email Address',
+            'message' => 'Your verification code: :code',
+            'code' => $code,
+            'firstname' => $firstname
+        ];
+
+        Notification::route('mail', $email)
+            ->notify(new EmailVerificationNotification($details));
+
+    }
 }

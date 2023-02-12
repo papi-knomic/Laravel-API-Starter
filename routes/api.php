@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\VerificationCodeController;
 use App\Traits\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -29,6 +30,14 @@ Route::group(['middleware' => ['json']], function () {
     Route::post('/register', [AuthController::class, 'register']);
     //login
     Route::post('/login', [AuthController::class, 'login']);
+    //resend verification code
+    Route::post('/resend-verify-code', [VerificationCodeController::class, 'resendVerificationCode']);
+    //verify email
+    Route::post('/verify-email', [VerificationCodeController::class, 'verifyEmail']);
+    //request reset password code
+    Route::post('/request-reset-password', [VerificationCodeController::class, 'requestPasswordResetCode']);
+    //reset password
+    Route::post('/reset-password', [VerificationCodeController::class, 'resetPassword']);
 
 
     //protected routes
