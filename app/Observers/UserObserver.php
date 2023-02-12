@@ -3,6 +3,8 @@
 namespace App\Observers;
 
 use App\Models\User;
+use App\Notifications\EmailVerificationNotification;
+use Illuminate\Support\Facades\Notification;
 
 class UserObserver
 {
@@ -60,4 +62,23 @@ class UserObserver
     {
         //
     }
+
+    /**
+     * @throws \Exception
+     */
+//    private function generateUserVerificationCode(string $email ) {
+//        $code = generateVerificationCodeForUser($email);
+//        $firstname = getUserFirstNameFromEmail($email);
+//
+//        $details = [
+//            'subject' => 'Verify Email Address',
+//            'message' => 'Your verification code: :code',
+//            'code' => $code,
+//            'firstname' => $firstname
+//        ];
+//
+//        Notification::route('mail', $email)
+//            ->notify(new EmailVerificationNotification($details));
+//
+//    }
 }
