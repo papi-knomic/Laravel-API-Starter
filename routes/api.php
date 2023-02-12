@@ -26,6 +26,9 @@ Route::group(['middleware' => ['json']], function () {
         return Response::successResponse('Welcome to FOSI');
     });
 
+    //view profile
+    Route::get('/profile/{username}', [AuthController::class, 'viewProfile']);
+
     //register
     Route::post('/register', [AuthController::class, 'register']);
     //login

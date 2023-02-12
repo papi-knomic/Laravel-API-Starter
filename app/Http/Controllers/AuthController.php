@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginUserRequest;
 use App\Http\Requests\RegisterUserRequest;
+use App\Http\Requests\ViewProfileRequest;
 use App\Repositories\UserRepository;
 use App\Traits\Response;
 use Illuminate\Http\JsonResponse;
@@ -51,6 +52,12 @@ class AuthController extends Controller
         $accessToken = Auth::user()->createToken($token)->plainTextToken;
         $data = auth()->user();
         return Response::successResponseWithData($data, 'Profile data gotten', 200, $accessToken);
+    }
+
+    public function viewProfile( Request $request ): JsonResponse
+    {
+        $username = $request->username;
+        die();
     }
 
 }
