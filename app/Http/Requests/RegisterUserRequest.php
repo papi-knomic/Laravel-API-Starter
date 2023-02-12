@@ -26,17 +26,18 @@ class RegisterUserRequest extends FormRequest
         return [
             'first_name' => 'required|string',
             'last_name' => 'required|string',
-            'username' => 'required|string|unique:users',
-            'email' => 'required|email|unique:users',
+            'username' => 'required|string|unique:users,username',
+            'email' => 'required|email|unique:users,email',
             'password' => 'required|string|min:8|confirmed',
-            'location' => 'nullable|string',
-            'skills' => 'nullable|string',
+            'location' => 'required|string',
+            'skills' => 'required|string',
             'profile_picture' => 'nullable|url',
             'github_url' => 'nullable|url',
-            'bio' => 'nullable|string',
+            'bio' => 'required|string|min:50|max:500',
             'portfolio' => 'nullable|string',
             'interests' => 'nullable|string',
-            'current_position' => 'nullable|string'
+            'current_position' => 'nullable|string',
+            'languages' => 'nullable|string'
         ];
     }
 }

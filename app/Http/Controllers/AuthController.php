@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\RegisterUserRequest;
 use App\Repositories\UserRepository;
+use App\Traits\Response;
 use Illuminate\Http\JsonResponse;
 
 class AuthController extends Controller
@@ -23,9 +24,9 @@ class AuthController extends Controller
     {
         $fields = $request->validated();
 
-        var_dump($fields);
-        dd();
+        $user = $this->userRepository->create($fields);
 
+        return Response::successResponseWithData($user, 'Successful!, check your mail for verification code');
     }
 
 }
