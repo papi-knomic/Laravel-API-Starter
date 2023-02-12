@@ -7,6 +7,7 @@ use App\Http\Requests\RegisterUserRequest;
 use App\Repositories\UserRepository;
 use App\Traits\Response;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
@@ -42,6 +43,14 @@ class AuthController extends Controller
             return Response::successResponseWithData($data, 'Login successful', 200, $accessToken);
         }
         return Response::errorResponse('Invalid Login credentials', 400);
+    }
+
+    public function profile( Request $request ): JsonResponse
+    {
+        $token = config('keys.token');
+        $accessToken = Auth::user()->createToken($token)->plainTextToken;
+        $data = auth()->user();
+        return Response::successResponseWithData($data, 'Profile data gotten', 200, $accessToken);
     }
 
 }
