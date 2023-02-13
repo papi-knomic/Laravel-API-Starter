@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\LoginUserRequest;
 use App\Http\Requests\RegisterUserRequest;
 use App\Http\Requests\ViewProfileRequest;
+use App\Http\Resources\ProfileViewResource;
+use App\Models\User;
 use App\Repositories\UserRepository;
 use App\Traits\Response;
 use Illuminate\Http\JsonResponse;
@@ -57,7 +59,13 @@ class AuthController extends Controller
     public function viewProfile( Request $request ): JsonResponse
     {
         $username = $request->username;
-        die();
+        $user = User::whereUsername($username)->first();
+        if ( $user ) {
+            $profileResource = new ProfileViewResource($user);
+            return Response::successResponseWithData($profileResource,'Success');
+        }
+
+        return Response::errorResponse('User not found', 404);
     }
 
 }
