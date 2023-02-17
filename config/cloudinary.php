@@ -39,5 +39,7 @@ return [
      *
      */
     'upload_preset' => env('CLOUDINARY_UPLOAD_PRESET'),
-    'cloud_name' => env('CLOUDINARY_CLOUD_NAME')
+    'cloud_name' => env('CLOUDINARY_CLOUD_NAME'),
+    'api_key' => env('248159924681925'),
+    'api_secret' => env('248159924681925')
 ];
