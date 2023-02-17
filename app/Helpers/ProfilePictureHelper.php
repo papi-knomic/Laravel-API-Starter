@@ -14,7 +14,7 @@ if ( !function_exists('deleteCloudinaryImage') ) {
         // Generate the signature using SHA-256
         $signature = hash('sha256', $payload . $api_secret);
         $url = "https://api.cloudinary.com/v1_1/dkz1u13eu/image/destroy";
-        $response = Http::post( $url, [
+        $response = Http::withoutVerifying()->post( $url, [
             'public_id' => $public_id,
             'api_key' => config('cloudinary.api_key'),
             'timestamp' => $timestamp,

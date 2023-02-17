@@ -5,7 +5,6 @@ namespace App\Jobs;
 use App\Models\ProfilePicture;
 use App\Models\User;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
@@ -52,17 +51,16 @@ class ProfilePictureJob implements ShouldQueue
             deleteCloudinaryImage( $profileCheck->image_id );
             $profile = ProfilePicture::whereId( $profileCheck->id )
                 ->update($args);
+            $this->id = $profileCheck->id;
         }
         else{
             $profile = ProfilePicture::create( $args );
+            $this->id = $profile->id;
         }
 
         if ( $profile ) {
-            $this->id = $profile->id;
             $this->updateProfile();
         }
-
-
     }
 
 

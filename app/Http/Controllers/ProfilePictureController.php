@@ -25,14 +25,17 @@ class ProfilePictureController extends Controller
     {
         $request->validated();
         $file = $request->file('image');
+        $cloudName = config('cloudinary.cloud_name');
 
-        $url = 'https://api.cloudinary.com/v1_1/dkz1u13eu/image/upload?upload_preset=ml_default';
+        $url = "https://api.cloudinary.com/v1_1/$cloudName/image/upload";
         $filePath = $file->getRealPath();
         $base64 = base64_encode( file_get_contents( $filePath ) );
 
-        $response = Http::post( $url, [
+        $response = Http::withoutVerifying()->post( $url, [
+            'api_key' => config('cloudinary.api_key'),
             'file' => "data:{$file->getClientMimeType()};base64,{$base64}",
             'multiple' => true,
+            'upload_preset' => config('cloudinary.upload_preset')
         ]);
         if ( $response->failed() ){
             return Response::errorResponse();
@@ -42,7 +45,12 @@ class ProfilePictureController extends Controller
 
         ProfilePictureJob::dispatchAfterResponse( $body );
 
-        return Response::successResponse('Profile Picture updated successfully', 201);
+        $data = [
+            'public_id' => $body['public_id'],
+            'url' => $body['secure_url']
+        ];
+
+        return Response::successResponseWithData($data,'Profile Picture updated successfully', 201);
     }
 
     /**
