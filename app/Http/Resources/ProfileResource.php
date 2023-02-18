@@ -25,13 +25,14 @@ class ProfileResource extends JsonResource
             "verified" => $this->email_verified_at,
             "location" => $this->location,
             "skills" => $this->skills,
-            "profile_picture" => new ProfilePictureResource($this->profilePicture),
+            "profile_picture" => $this->profilePicture->url ?? null,
             "bio" => $this->bio,
             "portfolio" => $this->portfolio,
             "interests" => $this->interests,
             "current_position" => $this->current_position,
             "languages" => $this->languages,
             "github_url" => $this->github_url,
+            'socials' => SocialResource::collection($this->socials),
             ];
     }
 }

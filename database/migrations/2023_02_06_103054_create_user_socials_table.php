@@ -15,10 +15,13 @@ class CreateUserSocialsTable extends Migration
     {
         Schema::create('user_socials', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->unsignedBigInteger('user_id');
+            $table->string('platform');
             $table->string('url');
-            $table->string('social');
             $table->timestamps();
+
+            $table->unique(['user_id', 'platform']); // ensure only one URL per platform per user
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

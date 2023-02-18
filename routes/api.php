@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProfilePictureController;
+use App\Http\Controllers\UserSocialController;
 use App\Http\Controllers\VerificationCodeController;
 use App\Traits\Response;
 use Illuminate\Http\Request;
@@ -55,6 +56,10 @@ Route::group(['middleware' => ['json']], function () {
             Route::get('/profile-picture', [ ProfilePictureController::class, 'show']);
             //post profile picture
             Route::post('/profile-picture', [ ProfilePictureController::class, 'store']);
+            //get user social
+            Route::get('/social', [UserSocialController::class, 'index']);
+            //create user socials
+            Route::post('/social', [UserSocialController::class, 'store']);
         });
     });
 });

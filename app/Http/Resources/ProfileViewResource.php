@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources;
 
-use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -14,7 +13,7 @@ class ProfileViewResource extends JsonResource
      * @param  Request  $request
      * @return array
      */
-    public function toArray($request)
+    public function toArray($request): array
     {
         return [
             "id" => $this->id,
@@ -23,13 +22,14 @@ class ProfileViewResource extends JsonResource
             "username" => $this->username,
             "location" => $this->location,
             "skills" => $this->skills,
-            "profile_picture" => new ProfilePictureResource($this->profilePicture),
+            "profile_picture" => $this->profile_picture->url ?? null,
             "bio" => $this->bio,
             "portfolio" => $this->portfolio,
             "interests" => $this->interests,
             "current_position" => $this->current_position,
             "languages" => $this->languages,
             "github_url" => $this->github_url,
+            'socials' => SocialResource::collection($this->socials),
         ];
     }
 }
