@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\LoginUserRequest;
 use App\Http\Requests\RegisterUserRequest;
 use App\Http\Requests\ViewProfileRequest;
+use App\Http\Resources\ProfileResource;
 use App\Http\Resources\ProfileViewResource;
 use App\Models\User;
 use App\Repositories\UserRepository;
@@ -53,13 +54,19 @@ class AuthController extends Controller
         $token = config('keys.token');
         $accessToken = Auth::user()->createToken($token)->plainTextToken;
         $data = auth()->user();
-        return Response::successResponseWithData($data, 'Profile data gotten', 200, $accessToken);
+        $user =  User::whereId($data->id)
+            ->with('profilePicture')
+            ->first();
+        $profileResource = new ProfileResource($user);
+        return Response::successResponseWithData($profileResource, 'Profile data gotten', 200, $accessToken);
     }
 
     public function viewProfile( Request $request ): JsonResponse
     {
         $username = $request->username;
-        $user = User::whereUsername($username)->first();
+        $user = User::whereUsername($username)
+            ->with('profilePicture')
+            ->first();
         if ( $user ) {
             $profileResource = new ProfileViewResource($user);
             return Response::successResponseWithData($profileResource,'Success');

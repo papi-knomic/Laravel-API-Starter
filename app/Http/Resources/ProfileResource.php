@@ -6,7 +6,7 @@ use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ProfileViewResource extends JsonResource
+class ProfileResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -14,13 +14,15 @@ class ProfileViewResource extends JsonResource
      * @param  Request  $request
      * @return array
      */
-    public function toArray($request)
+    public function toArray($request): array
     {
         return [
             "id" => $this->id,
             "first_name" => $this->first_name,
             "last_name" => $this->last_name,
+            "email" => $this->email,
             "username" => $this->username,
+            "verified" => $this->email_verified_at,
             "location" => $this->location,
             "skills" => $this->skills,
             "profile_picture" => new ProfilePictureResource($this->profilePicture),
@@ -30,6 +32,6 @@ class ProfileViewResource extends JsonResource
             "current_position" => $this->current_position,
             "languages" => $this->languages,
             "github_url" => $this->github_url,
-        ];
+            ];
     }
 }
