@@ -3,8 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class RegisterUserRequest extends FormRequest
+class UpdateProfileRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +14,7 @@ class RegisterUserRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return (bool)auth()->user();
     }
 
     /**
@@ -24,15 +25,20 @@ class RegisterUserRequest extends FormRequest
     public function rules()
     {
         return [
-            'first_name' => 'required|string',
-            'last_name' => 'required|string',
-            'username' => 'required|string|unique:users,username',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|string|min:8|confirmed',
-            'location' => 'required|string',
-            'skills' => 'required|string',
+            'first_name' => 'string',
+            'last_name' => 'string',
+            'username' => [
+                'string',
+                Rule::unique('users', 'username')->ignore(auth()->id()),
+            ],
+            'email' => [
+                'email',
+                Rule::unique('users', 'email')->ignore(auth()->id()),
+            ],
+            'location' => 'string',
+            'skills' => 'string',
             'github_url' => 'nullable|url',
-            'bio' => 'required|string|min:50|max:500',
+            'bio' => 'string|min:50|max:500',
             'portfolio' => 'nullable|string',
             'interests' => 'nullable|string',
             'current_position' => 'nullable|string',

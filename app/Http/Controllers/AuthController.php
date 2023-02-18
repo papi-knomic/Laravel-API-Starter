@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginUserRequest;
 use App\Http\Requests\RegisterUserRequest;
-use App\Http\Requests\ViewProfileRequest;
+use App\Http\Requests\UpdateProfileRequest;
 use App\Http\Resources\ProfileResource;
 use App\Http\Resources\ProfileViewResource;
 use App\Models\User;
@@ -73,6 +73,18 @@ class AuthController extends Controller
         }
 
         return Response::errorResponse('User not found', 404);
+    }
+
+    public function update( UpdateProfileRequest $request ) : JsonResponse
+    {
+        $fields = $request->validated();
+
+        $update = $this->userRepository->update($fields);
+
+        $user = User::whereId($update)->first();
+        $profileResource = new ProfileResource($user);
+
+        return Response::successResponseWithData( $profileResource,'Profile updated', 201);
     }
 
 }

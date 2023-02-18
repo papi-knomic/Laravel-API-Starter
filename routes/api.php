@@ -47,8 +47,10 @@ Route::group(['middleware' => ['json']], function () {
     //protected routes
     Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::prefix('account')->group(function () {
-            //create
+            //view your profile
             Route::get('/profile', [AuthController::class, 'profile']);
+            //update
+            Route::post('/profile', [AuthController::class, 'update']);
             //get profile picture
             Route::get('/profile-picture', [ ProfilePictureController::class, 'show']);
             //post profile picture
