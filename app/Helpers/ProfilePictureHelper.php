@@ -20,7 +20,6 @@ if ( !function_exists('deleteCloudinaryImage') ) {
             'timestamp' => $timestamp,
             'signature' => $signature
         ]);
-        Log::info('Upload', json_decode($response->body(), true));
         return json_decode($response->body());
     }
 }
