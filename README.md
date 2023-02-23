@@ -5,6 +5,7 @@ This is a starter code for building RESTful APIs using Laravel, a powerful PHP w
 ## Endpoints
 
 You can find endpoints for the starter code on this [Postman Collection](https://www.postman.com/material-candidate-69164888/workspace/public-workspace/collection/20113829-b8d145ae-c139-414d-aabf-c78a986fce5d?action=share&creator=20113829)
+Documentation for the Postman can be found [here](https://documenter.getpostman.com/view/20113829/2s93CNLsM2)
 
 ## Packages Included
 
