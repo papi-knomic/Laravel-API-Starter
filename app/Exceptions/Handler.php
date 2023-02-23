@@ -52,14 +52,14 @@ class Handler extends ExceptionHandler
             if ($e instanceof  AccessDeniedHttpException) {
                 return Response::errorResponse('You are not authorised to do this');
             }
+            $message = $e->getMessage();
             if ($e instanceof  HttpException) {
-                $message = $e->getMessage();
                 return Response::errorResponse($message);
             }
             if ($e instanceof QueryException) {
-                $message = $e->getMessage();
                 return Response::errorResponse('Database error');
             }
+            return Response::errorResponse($message);
         });
 
         $this->reportable(function (Throwable $e) {
