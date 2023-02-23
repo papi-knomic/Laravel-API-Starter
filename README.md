@@ -21,6 +21,7 @@ This starter code includes the following packages:
 
 - [Laravel Sanctum](https://laravel.com/docs/8.x/sanctum) for API authentication.
 - [Cloudinary](https://cloudinary.com/) for image upload.
+- [Mailtrap](https://mailtrap.io/) for email testing
 
 ## Installation
 
@@ -50,7 +51,16 @@ To use this starter code, you will need the following installed on your system:
    CLOUDINARY_CLOUD_NAME=name
    CLOUDINARY_API_KEY=key
    CLOUDINARY_API_SECRET=secret`
-7. Start the development server: `php artisan serve`.
+7. Create a [Mailtrap](https://mailtrap.io/) account, get your api credentials. Add to your `.env` file:
+`MAIL_MAILER=smtp
+   MAIL_HOST=smtp.mailtrap.io
+   MAIL_PORT=2525
+   MAIL_USERNAME=username
+   MAIL_PASSWORD=password
+   MAIL_ENCRYPTION=tls
+   MAIL_FROM_ADDRESS=mygoogle@gmail.com
+   MAIL_FROM_NAME="${APP_NAME}"`
+8. Start the development server: `php artisan serve`.
 
 ### Usage
 
