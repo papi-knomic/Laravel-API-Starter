@@ -4,16 +4,7 @@ This is a starter code for building RESTful APIs using Laravel, a powerful PHP w
 
 ## Endpoints
 
-This starter code includes the following endpoints:
-
-- `GET /api/users`: Returns a list of all users.
-- `GET /api/users/{id}`: Returns a single user by ID.
-- `POST /api/users`: Creates a new user.
-- `PUT /api/users/{id}`: Updates an existing user by ID.
-- `DELETE /api/users/{id}`: Deletes a user by ID.
-- `POST /api/login`: Logs in a user and returns an API token.
-- `POST /api/logout`: Logs out a user and revokes their API token.
-- `POST /api/upload`: Uploads an image file to Cloudinary.
+You can find endpoints for the starter code on this [Postman Collection](https://www.postman.com/material-candidate-69164888/workspace/public-workspace/collection/20113829-b8d145ae-c139-414d-aabf-c78a986fce5d?action=share&creator=20113829)
 
 ## Packages Included
 
